@@ -13,7 +13,7 @@ export const useTodoTasksController = (): ITodoTasksController => {
     tasks: [],
     sortParams: {
       sortBy: "priority", 
-      sortOrder: "desc", 
+      sortOrder: "asc", 
       // filterStatus: "incomplete",
     },
   });
