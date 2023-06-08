@@ -23,3 +23,16 @@ export interface ITodoTask {
     status: TaskStatus;
     title: string;
 }
+
+export interface ITodoData {
+    tasks: ITodoTask[];
+    sortParams?: ISortParams;
+}
+
+export interface ITodoTasksController extends ITodoData {
+    loadTasks: () => void;
+    addNewTask: (title: string, priority: PriorityValue) => void;
+    updateTaskStatus: (id: string, status: TaskStatus) => void;
+    updateTaskPriority: (id: string, priority: PriorityValue) => void;
+    resetTasks: () => void;
+}

@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  Box,
+  CssBaseline,
+  PaletteMode,
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Global } from '@emotion/react';
+import { getAppTheme } from './styles/theme';
+import { globalStyles } from './styles/globalStyles';
+import { RootPage } from './containers/RootPage';
 import './App.css';
 
-function App() {
+interface AppProps {
+  mode?: PaletteMode;
+}
+
+const App = ({ mode = 'light' }: AppProps) => {
+  const theme = createTheme(getAppTheme(mode));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box height="100vh" display="flex" flexDirection="column">
+        <RootPage />
+      </Box>
+      <Global styles={globalStyles} />
+    </ThemeProvider>
   );
 }
 
