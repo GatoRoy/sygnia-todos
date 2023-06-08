@@ -28,8 +28,17 @@ export const useTodoTasksController = (): ITodoTasksController => {
     });
   };
 
+  const setFilterStatus = (filterStatus?: TaskStatus) => {
+    setTodoData((draft: ITodoData) => {
+      if (!draft.sortParams) {
+        draft.sortParams = {};
+      }
+      draft.sortParams.filterStatus = filterStatus;
+    });
+  };
+
   const addNewTask = async (title: string, priority: PriorityValue) => {
-    const response = await apiSyg.createNewTodoTask(title, priority);
+    await apiSyg.createNewTodoTask(title, priority);
 
     //reloading the tasks
     loadTasks();
@@ -39,7 +48,7 @@ export const useTodoTasksController = (): ITodoTasksController => {
     const currentTask = todoData.tasks.find(item => item.id === id);
 
     if (currentTask) {
-      const response = await apiSyg.updateTaskStatus(id, status);
+      await apiSyg.updateTaskStatus(id, status);
 
       //reloading the tasks
       loadTasks();
@@ -50,7 +59,7 @@ export const useTodoTasksController = (): ITodoTasksController => {
     const currentTask = todoData.tasks.find(item => item.id === id);
 
     if (currentTask) {
-      const response = await apiSyg.updateTaskPriority(id, priority);
+      await apiSyg.updateTaskPriority(id, priority);
 
       //reloading the tasks
       loadTasks();
@@ -58,7 +67,7 @@ export const useTodoTasksController = (): ITodoTasksController => {
   };
 
   const resetTasks = async () => {
-    const response = await apiSyg.resetTodoTasks();
+    await apiSyg.resetTodoTasks();
 
     //reloading the tasks
     loadTasks();
@@ -67,12 +76,13 @@ export const useTodoTasksController = (): ITodoTasksController => {
   useEffect(() => {
     loadTasks();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [todoData.sortParams]);
+  }, [todoData.sortParams, todoData.sortParams?.sortBy, todoData.sortParams?.sortOrder, todoData.sortParams?.filterStatus]);
 
   return {
     ...todoData,
     loadTasks,
     addNewTask,
+    setFilterStatus,
     updateTaskStatus,
     updateTaskPriority,
     resetTasks,

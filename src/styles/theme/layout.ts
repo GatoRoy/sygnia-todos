@@ -17,10 +17,19 @@ export const getLayoutStyles = (_mode: PaletteMode): ILayoutStyles => {
     // footer: {
     //   background: ColorPalette.main,
     // },
-    button: {
-      color: ColorPalette.light,
-      background: ColorPalette.dark,
-      disabled: ColorPalette.component1,
+    toggle: {
+      unselected: {
+        color: ColorPalette.light,
+        background: ColorPalette.component1,
+      },
+      selected: {
+        color: ColorPalette.light,
+        background: ColorPalette.dark,
+      },
+      disabled: {
+        color: ColorPalette.light,
+        background: ColorPalette.component2,
+      },
     },
     textbox: {
       background: ColorPalette.light,

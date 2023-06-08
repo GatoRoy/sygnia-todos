@@ -21,10 +21,19 @@ export interface ILayoutStyles {
   // footer: {
   //   background: string;
   // };
-  button: {
-    color: string;
-    background: string;
-    disabled: string;
+  toggle: {
+    unselected: {
+      color: string;
+      background: string;
+    };
+    selected: {
+      color: string;
+      background: string;
+    };
+    disabled: {
+      color: string;
+      background: string;
+    };
   };
   textbox: {
     background: string;
