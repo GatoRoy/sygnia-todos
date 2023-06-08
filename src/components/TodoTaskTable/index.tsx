@@ -21,21 +21,26 @@ interface TaskColumn {
     render?: (data: ITodoTask) => React.ReactNode;
 }
 
-const columns: readonly TaskColumn[] = [
-    { type: 'status', label: '', minWidth: 50, render: (item: ITodoTask) => <Checkbox checked={isTaskStatusCompleted(item.status)} /> },
-    { type: 'title', label: 'Title', minWidth: 170 },
-    { type: 'created_at', label: 'Created At', minWidth: 170 },
-    { type: 'priority', label: 'Priority', minWidth: 170, render: (item: ITodoTask) => getDisplayedPriority(item.priority).caption },
-];
-
 interface TodoTaskTableProps {
     items: ITodoTask[];
+    onTaskChecked: (item: ITodoTask) => void;
 }
 
 //table for the tasks with sticky header
-export const TodoTaskTable = ({ items }: TodoTaskTableProps) => {
+export const TodoTaskTable = ({ items, onTaskChecked }: TodoTaskTableProps) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const renderTaskCheckbox = (item: ITodoTask) => {
+        return <Checkbox checked={isTaskStatusCompleted(item.status)} onChange={() => onTaskChecked(item)} />
+    };
+
+    const columns: readonly TaskColumn[] = [
+        { type: 'status', label: '', minWidth: 50, render: renderTaskCheckbox },
+        { type: 'title', label: 'Title', minWidth: 170 },
+        { type: 'created_at', label: 'Created At', minWidth: 170 },
+        { type: 'priority', label: 'Priority', minWidth: 170, render: (item: ITodoTask) => getDisplayedPriority(item.priority).caption },
+    ];
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
