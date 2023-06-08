@@ -3,7 +3,7 @@ import { PageBase, PageBaseProps } from '../PageBase';
 import { StyledPageRow } from '../styled';
 import { StyledTodoListWrapper } from './styled';
 import { useTodoTasks } from '../../../store/hooks/UseTodoTasks/Context';
-import { ITodoTask } from '../../../store/types';
+import { ITodoTask, PriorityValue } from '../../../store/types';
 import { isTaskStatusCompleted } from '../../../store/utils';
 import { Typography } from '../../../components/controls/Typography';
 import { Button } from '../../../components/controls/buttons/Button';
@@ -13,7 +13,7 @@ import { Stack } from '../../../components/controls/Stack';
 interface TodoPageProps extends PageBaseProps {}
 
 export const TodoPage: FC<TodoPageProps> = props => {
-  const { tasks, addNewTask, updateTaskStatus, resetTasks } = useTodoTasks();
+  const { tasks, addNewTask, updateTaskStatus, updateTaskPriority, resetTasks } = useTodoTasks();
 
   const onAddNewTask = () => {
     addNewTask("First New Task", 1);//.then(data => console.log("create new task -> ", data));
@@ -22,6 +22,11 @@ export const TodoPage: FC<TodoPageProps> = props => {
   const onTaskChecked = (task: ITodoTask) => {
     const newStatus = isTaskStatusCompleted(task.status) ? 'incomplete' : 'complete';
     updateTaskStatus(task.id, newStatus);
+  };
+
+  const onTaskPriorityChanged = (task: ITodoTask) => {
+    const newPriority: PriorityValue = (task.priority < 3 ? task.priority + 1 : 1) as PriorityValue;
+    updateTaskPriority(task.id, newPriority);
   };
 
   const onResetTasks = () => {
@@ -40,7 +45,7 @@ export const TodoPage: FC<TodoPageProps> = props => {
         </Stack>
       </StyledPageRow>
       <StyledTodoListWrapper>
-        <TodoTaskTable items={tasks} onTaskChecked={onTaskChecked} />
+        <TodoTaskTable items={tasks} onTaskChecked={onTaskChecked} onTaskPriorityChanged={onTaskPriorityChanged} />
       </StyledTodoListWrapper>
     </PageBase>
   );
