@@ -1,10 +1,14 @@
 import { API_HOST, API_KEY } from '../constants';
+import ajaxManager from './ajaxManager';
 import { ITodoTask, TaskStatus, PriorityValue, ISortParams } from '../types';
-
-//TODO:  move the fetch-reqeust functionality to a separated file
 
 const createApiSygTodos = () => {
   const baseTodosUrl = `${API_HOST}/todos`;
+  const basicRequestOptions = {
+    headers: {
+      'x-api-key': API_KEY,
+    },
+  };
 
   //GET /todos
   const loadTodoTasks = async (sortParams?: ISortParams): Promise<ITodoTask[]> => {
@@ -17,64 +21,27 @@ const createApiSygTodos = () => {
     }
     const requestUrl = reqeustParams.length > 0 ? `${baseTodosUrl}?${reqeustParams.join('&')}` : baseTodosUrl;
 
-    const response = await fetch(requestUrl, {
-      method: 'GET',
-      headers: {
-        'x-api-key': API_KEY,
-      }
-    });
-    return await response.json();
+    return await ajaxManager.get(requestUrl, basicRequestOptions);
   };
 
   //PUT /todos/{id}/status
   const updateTaskStatus = async (id: string, status: TaskStatus) => {
-    const response = await fetch(`${baseTodosUrl}/${id}/status`, {
-      method: 'PUT',
-      headers: {
-        'x-api-key': API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status }),
-    });
-    return await response.json();
+    return await ajaxManager.put(`${baseTodosUrl}/${id}/status`, JSON.stringify({ status }), basicRequestOptions);
   };
 
   //PUT /todos/{id}/priority
   const updateTaskPriority = async (id: string, priority: PriorityValue) => {
-    const response = await fetch(`${baseTodosUrl}/${id}/priority`, {
-      method: 'PUT',
-      headers: {
-        'x-api-key': API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ priority }),
-    });
-    return await response.json();
+    return await ajaxManager.put(`${baseTodosUrl}/${id}/priority`, JSON.stringify({ priority }), basicRequestOptions);
   };
 
   //POST /todos
   const createNewTodoTask = async (title: string, priority: PriorityValue) => {
-    const response = await fetch(baseTodosUrl, {
-      method: 'POST',
-      headers: {
-        'x-api-key': API_KEY,
-        'Content-Type': 'application/json',
-        // crossorigin: 'anonymous',
-      },
-      body: JSON.stringify({ title, priority }),
-    });
-    return await response.json();
+    return await ajaxManager.post(`${baseTodosUrl}`, JSON.stringify({ title, priority }), basicRequestOptions);
   };
 
   //GET /reset
   const resetTodoTasks = async (): Promise<ITodoTask[]> => {
-    const response = await fetch(`${API_HOST}/reset`, {
-      method: 'GET',
-      headers: {
-        'x-api-key': API_KEY,
-      }
-    });
-    return await response.json();
+    return await ajaxManager.get(`${API_HOST}/reset`, basicRequestOptions);
   };
 
   return {
