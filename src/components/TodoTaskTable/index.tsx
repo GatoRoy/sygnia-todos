@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { ITodoTask } from '../../store/types';
+import { ITodoTask, PriorityValue } from '../../store/types';
 import { isTaskStatusCompleted } from '../../store/utils';
 import { Checkbox } from '../controls/Checkbox';
 import { PriorityLabel } from '../PriorityLabel';
@@ -25,7 +25,7 @@ interface TaskColumn {
 interface TodoTaskTableProps {
     items: ITodoTask[];
     onTaskChecked: (item: ITodoTask) => void;
-    onTaskPriorityChanged: (item: ITodoTask) => void;
+    onTaskPriorityChanged: (item: ITodoTask, newPriority: PriorityValue) => void;
 }
 
 //table for the tasks with sticky header
@@ -38,7 +38,7 @@ export const TodoTaskTable = ({ items, onTaskChecked, onTaskPriorityChanged }: T
     };
 
     const renderTaskPriority = (item: ITodoTask) => {
-        return <PriorityLabel priority={item.priority} onClick={() => onTaskPriorityChanged(item)} />;
+        return <PriorityLabel priority={item.priority} onPriorityChanged={(newPriority) => onTaskPriorityChanged(item, newPriority)} />;
     };
 
     const columns: readonly TaskColumn[] = [

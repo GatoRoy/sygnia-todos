@@ -16,7 +16,7 @@ export const TodoPage: FC<TodoPageProps> = props => {
   const { tasks, addNewTask, updateTaskStatus, updateTaskPriority, resetTasks } = useTodoTasks();
 
   const onAddNewTask = () => {
-    addNewTask("First New Task", 1);//.then(data => console.log("create new task -> ", data));
+    addNewTask("First New Task", 2);
   };
 
   const onTaskChecked = (task: ITodoTask) => {
@@ -24,13 +24,12 @@ export const TodoPage: FC<TodoPageProps> = props => {
     updateTaskStatus(task.id, newStatus);
   };
 
-  const onTaskPriorityChanged = (task: ITodoTask) => {
-    const newPriority: PriorityValue = (task.priority < 3 ? task.priority + 1 : 1) as PriorityValue;
+  const onTaskPriorityChanged = (task: ITodoTask, newPriority: PriorityValue) => {
     updateTaskPriority(task.id, newPriority);
   };
 
   const onResetTasks = () => {
-    resetTasks();//.then(data => console.log("reset -> ", data));
+    resetTasks();
   };
 
   return (
