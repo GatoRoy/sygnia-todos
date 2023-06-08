@@ -2,16 +2,23 @@ import React, { FC } from 'react';
 import { PageBase, PageBaseProps } from '../PageBase';
 import { StyledPageRow } from '../styled';
 import { StyledTodoListWrapper } from './styled';
-import apiSyg from '../../../store/api/apiSygTodos';
+import { useTodoTasks } from '../../../store/hooks/UseTodoTasks/Context';
 import { Typography } from '../../../components/controls/Typography';
 import { Button } from '../../../components/controls/buttons/Button';
+import { TodoTaskTable } from '../../../components/TodoTaskTable';
 import { Stack } from '../../../components/controls/Stack';
 
 interface TodoPageProps extends PageBaseProps {}
 
-const TodoPage: FC<TodoPageProps> = props => {
+export const TodoPage: FC<TodoPageProps> = props => {
+  const { tasks, addNewTask, resetTasks } = useTodoTasks();
+
   const onAddNewTask = () => {
-    apiSyg.createNewTodoTask("First New Task", 1).then(data => console.log("create new task -> ", data));
+    addNewTask("First New Task", 1);//.then(data => console.log("create new task -> ", data));
+  };
+
+  const onResetTasks = () => {
+    resetTasks();//.then(data => console.log("reset -> ", data));
   };
 
   return (
@@ -22,13 +29,12 @@ const TodoPage: FC<TodoPageProps> = props => {
             TODO List
           </Typography>
           <Button onClick={onAddNewTask}>+ Add Task</Button>
+          <Button onClick={onResetTasks}>Reset Task</Button>
         </Stack>
       </StyledPageRow>
       <StyledTodoListWrapper>
-        TodoTaskTable
+        <TodoTaskTable items={tasks} />
       </StyledTodoListWrapper>
     </PageBase>
   );
 };
-
-export default TodoPage;

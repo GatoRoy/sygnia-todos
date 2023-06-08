@@ -27,7 +27,7 @@ const createApiSygTodos = () => {
   };
 
   //PUT /todos/{id}/status
-  const updateStatus = async (id: string, status: TaskStatus) => {
+  const updateTaskStatus = async (id: string, status: TaskStatus) => {
     const response = await fetch(`${baseTodosUrl}/${id}/status`, {
       method: 'PUT',
       headers: {
@@ -40,7 +40,7 @@ const createApiSygTodos = () => {
   };
 
   //PUT /todos/{id}/priority
-  const updatePriority = async (id: string, priority: PriorityValue) => {
+  const updateTaskPriority = async (id: string, priority: PriorityValue) => {
     const response = await fetch(`${baseTodosUrl}/${id}/priority`, {
       method: 'PUT',
       headers: {
@@ -59,7 +59,7 @@ const createApiSygTodos = () => {
       headers: {
         'x-api-key': API_KEY,
         'Content-Type': 'application/json',
-        crossorigin: 'anonymous',
+        // crossorigin: 'anonymous',
       },
       body: JSON.stringify({ title, priority }),
     });
@@ -79,8 +79,8 @@ const createApiSygTodos = () => {
 
   return {
     loadTodoTasks,
-    updateStatus,
-    updatePriority,
+    updateTaskStatus,
+    updateTaskPriority,
     createNewTodoTask,
     resetTodoTasks,
   };
