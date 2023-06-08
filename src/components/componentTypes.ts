@@ -23,3 +23,7 @@ export interface BaseControlProps
    */
   sx?: SxProps<Theme>;
 }
+
+export interface ClickableProps extends BaseControlProps {
+  onClick: React.MouseEventHandler<HTMLElement>;
+}
