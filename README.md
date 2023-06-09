@@ -44,3 +44,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## TODO Task with API 
+
+The TODO list task:
+https://github.com/SygniaLabs/frontend-dev-task
+
+Api
+`https://hor23frby6.execute-api.us-east-1.amazonaws.com/prod/todos`
+
+`https://hor23frby6.execute-api.us-east-1.amazonaws.com/prod/reset` - resets the data from the API
+
+x-api-key
+`5ITWHnqMJ73JcaJFhELR17wSWjHEWLhB1DnVuEw7`
+
